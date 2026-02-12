@@ -17,6 +17,7 @@ public class Payment {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "order_id")
     private Order order;
 
     public Payment(){
