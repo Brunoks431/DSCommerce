@@ -19,10 +19,8 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id){
-         Optional<Product> result = repository.findById(id);
-         Product product = result.get();
-         ProductDTO dto = new ProductDTO(product);
-         return dto;
+         Product product = repository.findById(id).get();
+         return new ProductDTO(product);
 
 
     }
@@ -46,6 +44,22 @@ public class ProductService {
         entity = repository.save(entity);
 
         return new ProductDTO(entity);
+    }
+
+    @Transactional
+    public ProductDTO update(ProductDTO dto, Long id){
+     Product entity = repository.getReferenceById(id);
+
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+
+        entity = repository.save(entity);
+
+        return new ProductDTO(entity);
+
+
     }
 
 
